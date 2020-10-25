@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import logo from './images/logo.svg';
 import './main.css'; 
 import './Test_component';
