@@ -2,8 +2,26 @@ import React, {Component} from 'react';
 import {Typography} from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Divider from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+import { withStyles } from '@material-ui/core/styles';
 
 
+
+
+const styles={
+    root: {
+        flexGrow: 1,
+      },
+      paper: {
+        padding: "10px",
+        textAlign: 'center',
+        
+      },
+    
+  };
 class Container_running extends Component{
 
     constructor(props){
@@ -15,38 +33,49 @@ class Container_running extends Component{
         };
     }
 
-    componentDidMount(){ //this method is executed when this component is loaded
+    async componentDidMount(){ //this method is executed when this component is loaded
 
-        let token= "Bearer "+"0e78f741cad4c6d26583d94d81bab01167ec8ebc";
+        
 
-        fetch("http://"+window.location.hostname+":8000/runningCont/",      //building a fetch request along with the headers
-        {
-            method: 'POST',
+        fetch("http://"+window.location.hostname+":8000/containershort",{
+            method: 'GET',
             withCredentials: true,
             credentials: 'same-origin',
-            mode: 'cors',
-            headers:{
-                'Authorization': token,
-                'Content-Type': 'application/json',
-                'Access-Control-Request-Headers':'http://localhost:3000'
-            }
-        })              
-        .then(response=> response.json())
-        .then(
-            (data)=>            //handling data when there is a response from the api
-            {
-                this.setState({isloaded:true, containers: data});
-            },
-            (error)=>           //handlind the error in response
-            {
-                this.setState({isloaded:true,error});
-            }
-        );
+            mode:'cors',
+            
+            headers: {
+                      'Authorization':sessionStorage.getItem('token'),
+                      
+                      
+                      }
+            
+            }).then(response => response.json()).then(
+                (result) => {
+                  this.setState({
+                    isloaded: true,
+                    containers: result
+                  });
+                  
+                  console.log(result);
+                },
+                // Note: it's important to handle errors here
+                // instead of a catch() block so that we don't swallow
+                // exceptions from actual bugs in components.
+                (error) => {
+                  this.setState({
+                    isLoaded: true,
+                    error:null
+                  });
+                }
+              )
+
+        
     }
 
     render(){
         const{ error, isloaded, containers }=this.state;
-
+        console.log(isloaded);
+        const {classes} = this.props;
         if(error){
             return(
                 <div>
@@ -63,11 +92,32 @@ class Container_running extends Component{
                     <Box display="flex" justifyContent="center">
                         <CircularProgress justify="center" marginLeft="2" disableShrink color="#384d54"/>
                     </Box>
-                </Box>
-            );
+                </Box>);}
+        else {
+                const tagging=(
+                  <Grid container  spacing={12} color="text.primary">
+                    {containers.map((objects)=>
+                    
+                      <Grid item xs={12}>
+                          <Paper className={classes.paper} xs={6}>
+                            <Box  align="left"><Typography><b>Id</b> {objects.id}</Typography></Box>
+                            <Box  align="left"><Typography><b>Name</b> {objects.Name}</Typography></Box>
+                            <Box  align="left"><Typography><b>Status</b> {objects.Status}</Typography></Box>
+                          </Paper>
+                        </Grid>
+                        
+                        )}
+                  </Grid>);
+                  return(
+                    <div style={{  whiteSpace: 'nowrap' }}>
+                        <Typography variant="body2">
+                        {tagging}
+                        </Typography>
+                        </div>
+                  )
         }
 
     }
 }
 
-export default Container_running;
+export default withStyles(styles)(Container_running);

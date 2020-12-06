@@ -25,7 +25,7 @@ function Main() {
         >
           Learn React
         </a>
-        <Container_running/>
+        
       </header>
       <Test_component name="nutan"/>
       

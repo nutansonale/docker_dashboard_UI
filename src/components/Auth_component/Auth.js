@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
-
+import Header from '../Header_component/Header';
 
 const styles={
     paper: {
@@ -35,6 +35,17 @@ const styles={
   };
 
 class Auth extends Component{
+
+    constructor(props){
+      super(props);
+      this.state={
+        password:"",
+        username:""
+      };
+
+      this.Authenticate=this.Authenticate.bind(this);
+
+    }
     
     Copyright() {
         return (
@@ -49,26 +60,69 @@ class Auth extends Component{
         );
       }
 
-      Authenticate()
+      async Authenticate(event)
       {
-        this.props.history.push('/home');
-      }
+        event.preventDefault();
+        //alert(this.state.username+"\n"+this.state.password);
+        //this.props.history.replace('/home');
+        if(this.state.username!=="" || this.state.password!==""){
+            let responce= await fetch("http://"+window.location.hostname+":8000/signin",{
+                            method: 'POST',
+                            credentials: 'same-origin',
+                            mode:'cors',
+                            headers: {
+                              'Authorization':'Token 81fa648bc86e41c6ad4419880fd989d762aa3c86',
+                                      
+                                      },
+                            body: JSON.stringify({"username":this.state.username,"password":this.state.password})
+                            });
+            if(responce.status !== 401)
+            {
+              let data = await responce.json();
+              
+              if(data.result==="Success")
+              {
+                sessionStorage.setItem("token", data.token);
+                this.props.history.replace('/home');
+
+              }
+            }
+            else
+            {
+              let data = await responce.json();
+              console.log(data);
+              
+
+            }
+         }
+         else{
+           alert("fields are empty");
+         }
+      
+    }
+
+
+
 
     render(){
-        const handleClick = () => this.props.history.replace('/home');
+        const handleClick = () => alert(this.state.username);
+        const handlechange=(event)=>this.setState({username:event.target.value});
+        const handlepass=(event)=>this.setState({password:event.target.value});
         const {classes} = this.props;
         return(
-        
+          <div>
+          
             <Container component="main" maxWidth="xs">
+              
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
+        <Typography component="h1" variant="h5" align="center">
+          Docker Dashboard <br/>Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} method="post" noValidate onSubmit={this.Authenticate}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -79,6 +133,7 @@ class Auth extends Component{
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handlechange}
           />
           <TextField
             variant="outlined"
@@ -90,6 +145,7 @@ class Auth extends Component{
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handlepass}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -101,7 +157,7 @@ class Auth extends Component{
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleClick}
+            
           >
             Sign In
           </Button>
@@ -117,7 +173,8 @@ class Auth extends Component{
       <Box mt={8}>
         <this.Copyright />
       </Box>
-    </Container>    );
+    </Container>  
+    </div>  );
     }
 }
 

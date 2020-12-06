@@ -6,6 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Container_running from '../Running_containers/Container_running';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -60,19 +61,17 @@ export default function SimpleTabs() {
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" variant="fullWidth">
           <Tab label="Images List" {...a11yProps(0)} />
-          <Tab label="All Containers" {...a11yProps(1)} />
-          <Tab label="Running Containers" {...a11yProps(2)} />
+          <Tab label="Containers" {...a11yProps(1)} />
+          
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         Item One
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Container_running/>
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
+      
     </div>
   );
 }
