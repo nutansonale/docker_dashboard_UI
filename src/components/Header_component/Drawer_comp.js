@@ -14,7 +14,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles({
     list: {
-      width: 250,
+      width: 200,
     },
     fullList: {
       width: 'auto',
@@ -47,6 +47,7 @@ const useStyles = makeStyles({
         onClick={toggleDrawer(anchor, false)}
         onKeyDown={toggleDrawer(anchor, false)}
       >
+        
         <List>
           {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
             <ListItem button key={text}>
@@ -69,12 +70,12 @@ const useStyles = makeStyles({
   
     return (
       <div>
-          <React.Fragment key={'left'}>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
+          <React.Fragment key={'right'}>
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('right', true)}>
                       <MenuIcon  />
                     </IconButton>
-            <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
-              {list('left')}
+            <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>
+              {list('right')}
             </Drawer>
           </React.Fragment>
       </div>

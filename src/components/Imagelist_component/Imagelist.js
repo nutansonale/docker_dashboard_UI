@@ -22,7 +22,7 @@ const styles={
       },
     
   };
-class Container_running extends Component{
+class Imagelist extends Component{
 
     constructor(props){
         super(props);
@@ -37,7 +37,7 @@ class Container_running extends Component{
 
         
 
-        fetch("http://"+window.location.hostname+":8000/containershort",{
+        fetch("http://"+window.location.hostname+":8000/imagelist",{
             method: 'GET',
             withCredentials: true,
             credentials: 'same-origin',
@@ -94,16 +94,15 @@ class Container_running extends Component{
                     </Box>
                 </Box>);}
         else {
-                
                 const tagging=(
                   <Grid container  spacing={12} color="text.primary">
                     {containers.map((objects)=>
                     
                       <Grid item xs={12}>
-                          <Paper className={classes.paper} style={{color: objects.Status==="running"?"green":"red"} } xs={6}>
+                          <Paper className={classes.paper} xs={6}>
                             <Box  align="left"><Typography><b>Id</b> {objects.id}</Typography></Box>
-                            <Box  align="left"><Typography><b>Name</b> {objects.Name}</Typography></Box>
-                            <Box  align="left"><Typography><b>Status</b> {objects.Status}</Typography></Box>
+                            <Box  align="left"><Typography><b>Name</b> {objects.tags}</Typography></Box>
+                            
                           </Paper>
                         </Grid>
                         
@@ -121,4 +120,4 @@ class Container_running extends Component{
     }
 }
 
-export default withStyles(styles)(Container_running);
+export default withStyles(styles)(Imagelist);

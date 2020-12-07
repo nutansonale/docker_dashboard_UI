@@ -72,7 +72,7 @@ class Auth extends Component{
                             mode:'cors',
                             headers: {
                               'Authorization':'Token 81fa648bc86e41c6ad4419880fd989d762aa3c86',
-                                      
+                              
                                       },
                             body: JSON.stringify({"username":this.state.username,"password":this.state.password})
                             });

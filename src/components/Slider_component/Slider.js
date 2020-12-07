@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Container_running from '../Running_containers/Container_running';
+import Imagelist from '../Imagelist_component/Imagelist';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,7 +67,7 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Item One
+        <Imagelist/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Container_running/>
