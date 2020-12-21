@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import logo from './images/logo.svg';
 import './main.css'; 
 import './Test_component';
+import Box from '@material-ui/core/Box';
 import Test_component from './Test_component';
 import { withStyles } from '@material-ui/core/styles';
 import Header from './Header_component/Header';
+import Contlist_short from './Contops_component/Contlist_short';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Container_running from './Running_containers/Container_running';
@@ -116,6 +118,10 @@ class Main extends Component{
         </Paper>
     <Typography>{this.state.containers}</Typography>
         <Slider/>
+        <Box bgcolor="#3f51b5" p={2}>
+        <Typography variant="h5"  align="left" style={{color: "white"}}>Assigned containers</Typography>
+        <Contlist_short/>
+        </Box>
         <header className="Main-header">
           <img src={logo} className="Main-logo" alt="logo" />
           <p>

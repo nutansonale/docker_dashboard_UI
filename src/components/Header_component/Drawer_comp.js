@@ -11,6 +11,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
     list: {
@@ -29,8 +30,8 @@ const useStyles = makeStyles({
       bottom: false,
       right: false,
     });
-  
-    const toggleDrawer = (anchor, open) => (event) => {
+    const history=useHistory();
+    const toggleDrawer = (anchor, open, keys) => (event) => {
       if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
         return;
       }
@@ -38,23 +39,27 @@ const useStyles = makeStyles({
       setState({ ...state, [anchor]: open });
     };
   
+    const listclick=(key)=>{
+      console.log(key);
+    };
+
     const list = (anchor) => (
       <div
         className={clsx(classes.list, {
           [classes.fullList]: anchor === 'top' || anchor === 'bottom',
         })}
         role="presentation"
-        onClick={toggleDrawer(anchor, false)}
-        onKeyDown={toggleDrawer(anchor, false)}
+        onClose={toggleDrawer(anchor, false, null)}
+        onKeyDown={toggleDrawer(anchor, false, null)}
       >
+
         
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+        <ListItem button key="continfo" >
+              <ListItemIcon><MailIcon/></ListItemIcon>
+              <ListItemText primary="continfo" onClick={()=>history.push("/Contops")} />
             </ListItem>
-          ))}
+          
         </List>
         <Divider />
         <List>

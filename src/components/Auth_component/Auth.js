@@ -99,7 +99,7 @@ class Auth extends Component{
            alert("fields are empty");
          }
       
-    }
+      }
 
 
 
