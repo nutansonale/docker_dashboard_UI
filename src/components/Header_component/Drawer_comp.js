@@ -55,32 +55,40 @@ const useStyles = makeStyles({
 
         
         <List>
-        <ListItem button key="continfo" >
-              <ListItemIcon><MailIcon/></ListItemIcon>
-              <ListItemText primary="continfo" onClick={()=>history.push("/Contops")} />
+        <ListItem button key="home" >
+              
+              <ListItemText primary="home" onClick={()=>history.push("/home")} />
             </ListItem>
-          
+        <ListItem button key="continfo" >
+              
+              <ListItemText primary="container info" onClick={()=>history.push("/Contops")} />
+            </ListItem>
+            <ListItem button key="distribute container" >
+              
+              <ListItemText primary="assign containers" onClick={()=>history.push("/distcont")} />
+            </ListItem>
+            <ListItem button key="volumes" >
+              
+              <ListItemText primary="Volumes list" onClick={()=>history.push("/volume")} />
+            </ListItem>
+            <ListItem button key="Build" >
+              
+              <ListItemText primary="Build image" onClick={()=>history.push("/build")} />
+            </ListItem>
         </List>
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        
       </div>
     );
   
     return (
       <div>
-          <React.Fragment key={'right'}>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('right', true)}>
+          <React.Fragment key={'left'}>
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
                       <MenuIcon  />
                     </IconButton>
-            <Drawer anchor={'right'} open={state['right']} onClose={toggleDrawer('right', false)}>
-              {list('right')}
+            <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+              {list('left')}
             </Drawer>
           </React.Fragment>
       </div>

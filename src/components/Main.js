@@ -122,22 +122,7 @@ class Main extends Component{
         <Typography variant="h5"  align="left" style={{color: "white"}}>Assigned containers</Typography>
         <Contlist_short/>
         </Box>
-        <header className="Main-header">
-          <img src={logo} className="Main-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="Main-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          
-        </header>
-        <Test_component name="nutan"/>
+       
         
       </div>
   
