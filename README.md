@@ -1,4 +1,4 @@
-[![CI](https://github.com/nutansonale/docker_dashboard_UI/actions/workflows/main.yml/badge.svg)](https://github.com/nutansonale/docker_dashboard_UI/actions/workflows/main.yml)
+[![CI](https://github.com/nutansonale/docker_dashboard_UI/actions/workflows/main.yml/badge.svg?event=push)](https://github.com/nutansonale/docker_dashboard_UI/actions/workflows/main.yml)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
