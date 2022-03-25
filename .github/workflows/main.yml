@@ -31,5 +31,7 @@ jobs:
 
       # npm build
       - name: Run a one-line script
-        run: /home/nutan/node-v14.17.3-linux-x64/bin/npm run build
+        run: |
+          CI=false
+          /home/nutan/node-v14.17.3-linux-x64/bin/npm run build
 
