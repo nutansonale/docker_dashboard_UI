@@ -27,7 +27,7 @@ jobs:
         - uses: actions/checkout@v2
 
         # npm install
-        - name: Run a one-line script
+        - name: npm_Install
           run: /home/nutan/node-v14.17.3-linux-x64/bin/npm i
 
 
@@ -40,7 +40,7 @@ jobs:
     steps:
       
       # npm build
-      - name: Run a one-line script
+      - name: npm_Build
         run: |
           CI=false
           /home/nutan/node-v14.17.3-linux-x64/bin/npm run build
