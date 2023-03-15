@@ -45,16 +45,31 @@ jobs:
 
           '
     - name: Build & Sonar
-      run: "cd source mvn -s ../settings.xml clean install -B sonar:sonar \n -Dsonar.login=${{\
-        \ secrets.SONAR_LOGIN }} \n -Dsonar.host.url=https://sonarqube-pic.ta.philips.com/sonar\
-        \ \n -Dsonar.projectBaseDir=. \n -Dsonar.pullrequest.key=${{ github.event.number\
-        \ }} \n -Dsonar.pullrequest.branch=${{ github.HEAD_REF }}\n -Dsonar.pullrequest.base=${{\
-        \ github.BASE_REF }} \n -Dsonar.pullrequest.github.repository=${{ github.repository\
-        \ }} \n -Dsonar.sourceEncoding=UTF-8 \n -Dsonar.qualitygate.wait=false \n\
-        \ -Dsonar.pullrequest.provider=github \n -Dsonar.coverage.jacoco.xmlReportPaths=AggReport/target/jacoco-aggregate-customization/jacoco.xml\
-        \ \n -Dsonar.javascript.lcov.reportPaths=applications/application-web/dawApplication/unitTesting/lcov/lcov.info\
-        \ \n -Dsonar.junit.reportPaths=source/**/target/surefire-reports \n -Dsonar.verbose=true\\\
-        \ -Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_test \\n  -Dsonar.projectName=psi2m-DAWNextGen-DAWNG_test"
+      run: "cd source mvn -s ../settings.xml clean install -B sonar:sonar 
+ -Dsonar.login=${{\
+        \ secrets.SONAR_LOGIN }} 
+ -Dsonar.host.url=https://sonarqube-pic.ta.philips.com/sonar\
+        \ 
+ -Dsonar.projectBaseDir=. 
+ -Dsonar.pullrequest.key=${{ github.event.number\
+        \ }} 
+ -Dsonar.pullrequest.branch=${{ github.HEAD_REF }}
+ -Dsonar.pullrequest.base=${{\
+        \ github.BASE_REF }} 
+ -Dsonar.pullrequest.github.repository=${{ github.repository\
+        \ }} 
+ -Dsonar.sourceEncoding=UTF-8 
+ -Dsonar.qualitygate.wait=false 
+\
+        \ -Dsonar.pullrequest.provider=github 
+ -Dsonar.coverage.jacoco.xmlReportPaths=AggReport/target/jacoco-aggregate-customization/jacoco.xml\
+        \ 
+ -Dsonar.javascript.lcov.reportPaths=applications/application-web/dawApplication/unitTesting/lcov/lcov.info\
+        \ 
+ -Dsonar.junit.reportPaths=source/**/target/surefire-reports 
+ -Dsonar.verbose=true\\\
+        \ -Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_test \
+  -Dsonar.projectName=psi2m-DAWNextGen-DAWNG_test"
     - env:
         SONAR_HOST_URL: https://sonarqube-pic.ta.philips.com/sonar
         SONAR_TOKEN: ${{ secrets.SONAR_LOGIN }}

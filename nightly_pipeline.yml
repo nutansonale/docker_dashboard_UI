@@ -39,15 +39,28 @@ jobs:
 
           '
     - name: Build & Sonar
-      run: "cd source mvn -s ../settings.xml deploy -B sonar:sonar \\\n  -Dsonar.login=${{\
-        \ secrets.SONAR_LOGIN }} \\\n  -Dsonar.host.url=https://sonarqube-pic.ta.philips.com/sonar\
-        \ \\\n  -Dsonar.projectBaseDir=. \\\n  -Dsonar.sourceEncoding=UTF-8 \\\n \
-        \ -Dsonar.qualitygate.wait=false \\\n  -Dsonar.branch.name=$GITHUB_REF_NAME\
-        \ \\\n  -Dsonar.coverage.jacoco.xmlReportPaths=AggReport/target/jacoco-aggregate-customization/jacoco.xml\
-        \ \\\n  -Dsonar.javascript.lcov.reportPaths=applications/application-web/dawApplication/unitTesting/lcov/lcov.info\
-        \ \\\n  -Dsonar.junit.reportPaths=source/**/target/surefire-reports \\\n \
-        \ -Dsonar.verbose=true\\\n -Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_test\
-        \ \\\n  -Dsonar.projectName=psi2m-DAWNextGen-DAWNG_test\n"
+      run: "cd source mvn -s ../settings.xml deploy -B sonar:sonar \\
+  -Dsonar.login=${{\
+        \ secrets.SONAR_LOGIN }} \\
+  -Dsonar.host.url=https://sonarqube-pic.ta.philips.com/sonar\
+        \ \\
+  -Dsonar.projectBaseDir=. \\
+  -Dsonar.sourceEncoding=UTF-8 \\
+ \
+        \ -Dsonar.qualitygate.wait=false \\
+  -Dsonar.branch.name=$GITHUB_REF_NAME\
+        \ \\
+  -Dsonar.coverage.jacoco.xmlReportPaths=AggReport/target/jacoco-aggregate-customization/jacoco.xml\
+        \ \\
+  -Dsonar.javascript.lcov.reportPaths=applications/application-web/dawApplication/unitTesting/lcov/lcov.info\
+        \ \\
+  -Dsonar.junit.reportPaths=source/**/target/surefire-reports \\
+ \
+        \ -Dsonar.verbose=true\\
+ -Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_test\
+        \ \\
+  -Dsonar.projectName=psi2m-DAWNextGen-DAWNG_test
+"
     - name: Setup Java for Blackduck
       uses: actions/setup-java@v3
       with:
