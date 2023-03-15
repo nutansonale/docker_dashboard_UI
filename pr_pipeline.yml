@@ -52,7 +52,7 @@ mvn -s ../settings.xml clean install -B sonar:sonar \\
         \  -Dsonar.login=${{ secrets.SONAR_LOGIN }} \\
   -Dsonar.host.url=https://sonarqube-pic.ta.philips.com/sonar\
         \ \\
-  -Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_master \\
+  	-Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_master \\
   -Dsonar.projectName=psi2m-DAWNextGen-DAWNG_master\
         \ \\
   -Dsonar.projectBaseDir=. \\
