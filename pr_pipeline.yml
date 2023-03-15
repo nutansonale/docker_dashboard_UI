@@ -41,9 +41,7 @@ jobs:
       with:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         path: /root/.m2/repository
-        restore-keys: '${{ runner.os }}-maven-
-
-          '
+        restore-keys: ${{ runner.os }}-maven-
     - name: Build & Sonar
       run: "cd sourcemvn -s ../settings.xml clean install -B sonar:sonar
 	 -Dsonar.login=${{ secrets.SONAR_LOGIN }}
