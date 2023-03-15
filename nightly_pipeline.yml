@@ -39,9 +39,9 @@ jobs:
 
           '
     - name: Build & Sonar
-      run: "cd source mvn -s ../settings.xml deploy -B sonar:sonar     
-	 -Dsonar.login=${{secrets.SONAR_LOGIN\
-        \ }}     
+      run: "cd source mvn -s ../settings.xml deploy -B sonar:sonar
+	 -Dsonar.login=${{\
+        \ secrets.SONAR_LOGIN }}     
 	 -Dsonar.host.url=https://sonarqube-pic.ta.philips.com/sonar\
         \  
 	 -Dsonar.projectBaseDir=.     
