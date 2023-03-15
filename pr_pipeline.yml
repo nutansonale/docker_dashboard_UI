@@ -46,29 +46,20 @@ jobs:
           '
     - name: Build & Sonar
       run: "cd sourcemvn -s ../settings.xml clean install -B sonar:sonar
-	 -Dsonar.login=${{\
-        \ secrets.SONAR_LOGIN }}
+	 -Dsonar.login=${{ secrets.SONAR_LOGIN }}
 	 -Dsonar.host.url=https://sonarqube-pic.ta.philips.com/sonar
-\
-        	 -Dsonar.projectBaseDir=.
-	 -Dsonar.pullrequest.key=${{ github.event.number\
-        \ }}
+	 -Dsonar.projectBaseDir=.
+	 -Dsonar.pullrequest.key=${{ github.event.number }}
 	 -Dsonar.pullrequest.branch=${{ github.HEAD_REF }}
-	 -Dsonar.pullrequest.base=${{\
-        \ github.BASE_REF }}
-	 -Dsonar.pullrequest.github.repository=${{ github.repository\
-        \ }}
+	 -Dsonar.pullrequest.base=${{ github.BASE_REF }}
+	 -Dsonar.pullrequest.github.repository=${{ github.repository }}
 	 -Dsonar.sourceEncoding=UTF-8
 	 -Dsonar.qualitygate.wait=false
-\
-        	 -Dsonar.pullrequest.provider=github     
+	 -Dsonar.pullrequest.provider=github     
 	 -Dsonar.coverage.jacoco.xmlReportPaths=AggReport/target/jacoco-aggregate-customization/jacoco.xml
-\
-        	 -Dsonar.javascript.lcov.reportPaths=applications/application-web/dawApplication/unitTesting/lcov/lcov.info
-\
-        	 -Dsonar.junit.reportPaths=source/**/target/surefire-reports
-	 -Dsonar.verbose=true\\\
-        \ -Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_test \
+	 -Dsonar.javascript.lcov.reportPaths=applications/application-web/dawApplication/unitTesting/lcov/lcov.info
+	 -Dsonar.junit.reportPaths=source/**/target/surefire-reports
+	 -Dsonar.verbose=true\\ -Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_test \
   -Dsonar.projectName=psi2m-DAWNextGen-DAWNG_test"
     - env:
         SONAR_HOST_URL: https://sonarqube-pic.ta.philips.com/sonar
