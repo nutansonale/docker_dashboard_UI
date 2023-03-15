@@ -1,1 +1,65 @@
-{"name": "PR pipeline", "true": {"workflow_dispatch": null, "pull_request": {"branches": ["master", "DAW/FEATURES/DAWNG_Feature_bulk_upload"], "paths-ignore": ["README.md"]}}, "env": {"http_proxy": "http://185.46.212.97:9480", "https_proxy": "http://185.46.212.97:9480", "no_proxy": "artifactory-ehv.ta.philips.com,tfsemea1.ta.philips.com,ingbtcpic2lx253.blr.pin.philips.com,blackduck.philips.com,tfssand.ta.philips.com,161.85.28.192,161.85.23.144,ingbtcpic5dtm55,tfssand.ta.philips.com,130.147.188.46,sonarqube-pic.ta.philips.com", "DAW_ARTIFACTORY_USER": "${{ secrets.DAW_ARTIFACTORY_USER }}", "DAW_ARTIFACTORY_PASS": "${{ secrets.DAW_ARTIFACTORY_PASS }}", "ASPADMIN_ARTIFACTORY_USER": "${{ secrets.ASPADMIN_ARTIFACTORY_USER }}", "ASPADMIN_ARTIFACTORY_PASS": "${{ secrets.ASPADMIN_ARTIFACTORY_PASS }}", "DAW_FUNCTIONAL_USER": "${{ secrets.DAW_FUNCTIONAL_USER }}", "DAW_FUNCTIONAL_PASS": "${{ secrets.DAW_FUNCTIONAL_PASS }}", "DAW_FUNCTIONAL_USER1": "${{ secrets.DAW_FUNCTIONAL_USER1 }}", "DAW_FUNCTIONAL_PASS1": "${{ secrets.DAW_FUNCTIONAL_PASS1 }}", "DOCKER_ARTIFACTORY_USER": "${{ secrets.DOCKER_ARTIFACTORY_USER }}", "DOCKER_ARTIFACTORY_PASS": "${{ secrets.DOCKER_ARTIFACTORY_PASS }}", "docker_hspd_user": "${{ secrets.docker_hspd_user }}", "docker_hspd_pass": "${{ secrets.docker_hspd_pass }}"}, "jobs": {"PR_Build": {"name": "Build", "runs-on": "${{ vars.HOST }}", "container": {"image": "psi2m-serviciability-docker-local.artifactory.pic.philips.com/dawnextgen:latest", "volumes": ["/var/run/docker.sock:/var/run/docker.sock"]}, "timeout-minutes": 640, "steps": [{"name": "Checkout", "uses": "actions/checkout@v2", "with": {"fetch-depth": 0}}, {"name": "Caching m2", "uses": "actions/cache@v2", "with": {"path": "/root/.m2/repository", "key": "${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}", "restore-keys": "${{ runner.os }}-maven-\n"}}, {"name": "Build & Sonar", "run": "cd source mvn -s ../settings.xml clean install -B sonar:sonar -Dsonar.login=${{ secrets.SONAR_LOGIN }} -Dsonar.host.url=https://sonarqube-pic.ta.philips.com/sonar -Dsonar.projectBaseDir=. -Dsonar.pullrequest.key=${{ github.event.number }} -Dsonar.pullrequest.branch=${{ github.HEAD_REF }}-Dsonar.pullrequest.base=${{ github.BASE_REF }} -Dsonar.pullrequest.github.repository=${{ github.repository }} -Dsonar.sourceEncoding=UTF-8 -Dsonar.qualitygate.wait=false -Dsonar.pullrequest.provider=github -Dsonar.coverage.jacoco.xmlReportPaths=AggReport/target/jacoco-aggregate-customization/jacoco.xml -Dsonar.javascript.lcov.reportPaths=applications/application-web/dawApplication/unitTesting/lcov/lcov.info -Dsonar.junit.reportPaths=source/**/target/surefire-reports -Dsonar.verbose=true\\ -Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_test \\n  -Dsonar.projectName=psi2m-DAWNextGen-DAWNG_test"}, {"name": "Sonar Gates", "uses": "philips-internal/sonar-gates-action@main", "env": {"SONAR_HOST_URL": "https://sonarqube-pic.ta.philips.com/sonar", "SONAR_TOKEN": "${{ secrets.SONAR_LOGIN }}"}, "with": {"projectName": "psi2m-DAWNextGen-DAWNG_test"}}]}}}
+name: PR pipeline
+true:
+  pull_request:
+    branches:
+    - master
+    - DAW/FEATURES/DAWNG_Feature_bulk_upload
+    paths-ignore:
+    - README.md
+  workflow_dispatch: null
+env:
+  ASPADMIN_ARTIFACTORY_PASS: ${{ secrets.ASPADMIN_ARTIFACTORY_PASS }}
+  ASPADMIN_ARTIFACTORY_USER: ${{ secrets.ASPADMIN_ARTIFACTORY_USER }}
+  DAW_ARTIFACTORY_PASS: ${{ secrets.DAW_ARTIFACTORY_PASS }}
+  DAW_ARTIFACTORY_USER: ${{ secrets.DAW_ARTIFACTORY_USER }}
+  DAW_FUNCTIONAL_PASS: ${{ secrets.DAW_FUNCTIONAL_PASS }}
+  DAW_FUNCTIONAL_PASS1: ${{ secrets.DAW_FUNCTIONAL_PASS1 }}
+  DAW_FUNCTIONAL_USER: ${{ secrets.DAW_FUNCTIONAL_USER }}
+  DAW_FUNCTIONAL_USER1: ${{ secrets.DAW_FUNCTIONAL_USER1 }}
+  DOCKER_ARTIFACTORY_PASS: ${{ secrets.DOCKER_ARTIFACTORY_PASS }}
+  DOCKER_ARTIFACTORY_USER: ${{ secrets.DOCKER_ARTIFACTORY_USER }}
+  docker_hspd_pass: ${{ secrets.docker_hspd_pass }}
+  docker_hspd_user: ${{ secrets.docker_hspd_user }}
+  http_proxy: http://185.46.212.97:9480
+  https_proxy: http://185.46.212.97:9480
+  no_proxy: artifactory-ehv.ta.philips.com,tfsemea1.ta.philips.com,ingbtcpic2lx253.blr.pin.philips.com,blackduck.philips.com,tfssand.ta.philips.com,161.85.28.192,161.85.23.144,ingbtcpic5dtm55,tfssand.ta.philips.com,130.147.188.46,sonarqube-pic.ta.philips.com
+jobs:
+  PR_Build:
+    container:
+      image: psi2m-serviciability-docker-local.artifactory.pic.philips.com/dawnextgen:latest
+      volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    name: Build
+    runs-on: ${{ vars.HOST }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Caching m2
+      uses: actions/cache@v2
+      with:
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        path: /root/.m2/repository
+        restore-keys: '${{ runner.os }}-maven-
+
+          '
+    - name: Build & Sonar
+      run: cd source mvn -s ../settings.xml clean install -B sonar:sonar -Dsonar.login=${{
+        secrets.SONAR_LOGIN }} -Dsonar.host.url=https://sonarqube-pic.ta.philips.com/sonar
+        -Dsonar.projectBaseDir=. -Dsonar.pullrequest.key=${{ github.event.number }}
+        -Dsonar.pullrequest.branch=${{ github.HEAD_REF }}-Dsonar.pullrequest.base=${{
+        github.BASE_REF }} -Dsonar.pullrequest.github.repository=${{ github.repository
+        }} -Dsonar.sourceEncoding=UTF-8 -Dsonar.qualitygate.wait=false -Dsonar.pullrequest.provider=github
+        -Dsonar.coverage.jacoco.xmlReportPaths=AggReport/target/jacoco-aggregate-customization/jacoco.xml
+        -Dsonar.javascript.lcov.reportPaths=applications/application-web/dawApplication/unitTesting/lcov/lcov.info
+        -Dsonar.junit.reportPaths=source/**/target/surefire-reports -Dsonar.verbose=true\
+        -Dsonar.projectKey=psi2m-DAWNextGen-DAWNG_test \n  -Dsonar.projectName=psi2m-DAWNextGen-DAWNG_test
+    - env:
+        SONAR_HOST_URL: https://sonarqube-pic.ta.philips.com/sonar
+        SONAR_TOKEN: ${{ secrets.SONAR_LOGIN }}
+      name: Sonar Gates
+      uses: philips-internal/sonar-gates-action@main
+      with:
+        projectName: psi2m-DAWNextGen-DAWNG_test
+    timeout-minutes: 640
